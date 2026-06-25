@@ -2,13 +2,13 @@ class Plant:
     _plist = []
     total_increase = 0
     
-    def __init__(self, name, height=0, days=0):
+    def __init__(self, name, height=0.0, days=0):
         self._name: str = name
         
         if height >= 0:
-            self._height: float = height
+            self._height: float = float(height)
         else:
-            self._height = 0
+            self._height = 0.0
         if days >= 0:
             self._days: int = days
         else:
@@ -45,7 +45,9 @@ class Plant:
         return self._days
         
     def show(self):
-        print(f"{self._name}: {round(self._height, 1)}cm, {self._days} days old")
+        print(
+            f"{self._name}: {round(self._height, 1)}cm, "
+            f"{self._days} days old")
 
 if __name__ == "__main__":
     plant1 = Plant(

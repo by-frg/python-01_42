@@ -4,7 +4,7 @@ class Plant:
     
     def __init__(self, name, height, days):
         self.name: str = name
-        self.height: float = height
+        self.height: float = float(height)
         self.days: int = days
         Plant.plist.append(self)
     
