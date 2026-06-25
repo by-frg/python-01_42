@@ -13,13 +13,16 @@ class Plant:
         else:
             self._days = 0
         Plant._plist.append(self)
+        self._calls = self.Stats()
     
     def grow(self, cm):
         self._height += cm
         Plant._total_increase += cm
+        self._calls.grow_calls += 1
     
     def age(self):
         self._days += 1
+        self._calls.age_calls += 1
     
     def set_height(self, new_height):
         if new_height < 0:
@@ -55,6 +58,12 @@ class Plant:
         print(
             f"{self._name.capitalize()}: {round(self._height, 1)}cm, "
               f"{self._days} days old")
+        self._calls.show_calls += 1
+        
+    class Stats:
+        grow_calls = 0
+        age_calls = 0
+        show_calls = 0
 
 class Flower(Plant):
     _blooming: bool = False
@@ -64,7 +73,6 @@ class Flower(Plant):
     
     def bloom(self):
         self._blooming = True
-        print(f"[asking the {self._name} to bloom]")
     
     def show(self):
         super().show()
@@ -73,6 +81,19 @@ class Flower(Plant):
             print(f" {self._name.capitalize()} is blooming beautifully!")
         else:
             print(f" {self._name.capitalize()} has not bloomed yet")
+
+class Seed(Flower):
+    def __init__(self, name, color, height=0, days=0):
+        super().__init__(name, color, height, days)
+        self._seeds: int = 0
+    
+    def bloom(self):
+        super().bloom()
+        self._seeds = 42
+    
+    def show(self):
+        super().show()
+        print(f" Seeds: {self._seeds}")
 
 class Tree(Plant):
     _shade: bool = False
@@ -83,6 +104,9 @@ class Tree(Plant):
     def produce_shade(self):
         self._shade = True
         print(f"asking the {self._name} to produce shade")
+        self._calls.shade_calls += 1
+    
+    def
     
     def show(self):
         super().show()
@@ -92,7 +116,7 @@ class Tree(Plant):
                 f"Tree {self._name.capitalize()} now produces a shade of "
                 f"{round(self._height, 1)}cm long and "
                 f"{round(self._trunk, 1)}cm wide")
-    
+
 class Vegetable(Plant):
     def __init__(self, name, harvest_season, height=0, days=0):
             super().__init__(name, height, days)
@@ -113,7 +137,21 @@ if __name__ == "__main__":
     print("=== Check year-old")
     Plant.check_age(40)
     Plant.check_age(400)
-    
+
+    print("\n=== Seed")
+    plant2 = Seed(
+        name = "Sunflower", 
+        height = 80.0, 
+        days = 45, 
+        color = "yellow")
+    plant2.show()
+    print("[make the sunflower grow, age and bloom]")
+    for i in range(20):
+        plant2.age()
+        plant2.grow(1.5)
+    plant2.bloom()
+    plant2.show()
+
     print("\n=== Anonymous")
     plant1 = Plant.anonymous()
     plant1.show()
