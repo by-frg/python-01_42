@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 name: str = "Rose"
 height: int = 25
 age: int = 30
-    
+
 if __name__ == "__main__":
     print("=== Welcome to my Garden ===")
     print(f"Plant: {name}")
